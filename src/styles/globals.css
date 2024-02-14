@@ -2,32 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+    font-family: "Zighead";
+    src: url("/fonts/zighead.otf");
+    format: "embedded-opentype";
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+    font-family: "Autography";
+    src: url("/fonts/autography.otf");
+    format: "embedded-opentype";
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    @apply antialiased bg-neutral-900 text-white;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* N-Progress Styles */
+
+/* Make clicks pass-through */
+#nprogress {
+    @apply pointer-events-none;
+}
+
+#nprogress .bar {
+    @apply bg-neutral-900 fixed z-[1031] top-0 left-0 w-full h-[2px];
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+    @apply absolute right-0 block w-24 h-full -translate-y-1 rotate-3;
+    box-shadow: 0 0 10px #ef4444, 0 0 5px #ef4444;
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+    @apply fixed block z-[1031] top-4 left-4;
+}
+
+#nprogress .spinner-icon {
+    @apply box-border w-4 h-4 border-2 border-transparent rounded-full border-l-neutral-900 border-t-neutral-900;
+
+    -webkit-animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+    @apply relative overflow-hidden;
+}
+
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+    @apply absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@keyframes nprogress-spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
